@@ -1,0 +1,41 @@
+NombreCategoria,CategoriaPadreCategoria
+Ropa,
+Calzado,
+Accesorios,
+Electrónica,
+Hogar,
+Juguetes,
+Libros,
+Muebles,
+Herramientas,
+Deportes,
+Zapatillas,Calzado
+Sandalias,Calzado
+Botas,Calzado
+Camisetas,Ropa
+Pantalones,Ropa
+Camisas,Ropa
+Vestidos,Ropa
+Abrigos,Ropa
+Formal,Ropa
+Informal,Ropa
+Smartphones,Electrónica
+Tabletas,Electrónica
+Computadoras,Electrónica
+Televisores,Electrónica
+Audio,Electrónica
+Electrodomésticos,Hogar
+Muebles de sala,Muebles
+Muebles de dormitorio,Muebles
+Juguetes educativos,Juguetes
+Juguetes de acción,Juguetes
+Juegos de mesa,Juguetes
+Libros de ficción,Libros
+Libros de no ficción,Libros
+Libros infantiles,Libros
+Herramientas eléctricas,Herramientas
+Herramientas manuales,Herramientas
+Jardinería,Herramientas
+Deportes de equipo,Deportes
+Deportes individuales,Deportes
+Equipamiento deportivo,Deportes
