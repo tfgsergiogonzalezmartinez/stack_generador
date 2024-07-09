@@ -6,14 +6,14 @@ Es una aplicación web cuyo objetivo principal es generar proyectos completos co
 
 🚀 Inicio rápido
 ----------------
-La aplicacion se encuentra accesible en internet a traves del enlace: [https://c8dc-2a0c-5a80-100c-e600-bcb7-a241-62cc-4f9a.ngrok-free.app](https://c8dc-2a0c-5a80-100c-e600-bcb7-a241-62cc-4f9a.ngrok-free.app)
+La aplicacion se encuentra accesible en internet a traves del enlace: https://c8dc-2a0c-5a80-100c-e600-bcb7-a241-62cc-4f9a.ngrok-free.app
 
 En caso de querer desplegarla en local, siga los siguientes pasos:
 
 1. Clona el repositorio:
 
     ```bash
-    git clone https://github.com/tfgsergiogonzalezmartinez/tfg_backend.git](https://github.com/tfgsergiogonzalezmartinez/stack_generador.git
+    git clone https://github.com/tfgsergiogonzalezmartinez/stack_generador.git
     ```
 
 2. Inicia el proyecto con Docker:
