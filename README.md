@@ -13,7 +13,7 @@ En caso de querer desplegarla en local, siga los siguientes pasos:
 1. Clona el repositorio:
 
     ```bash
-    git clone https://github.com/tfgsergiogonzalezmartinez/tfg_backend.git
+    git clone https://github.com/tfgsergiogonzalezmartinez/tfg_backend.git](https://github.com/tfgsergiogonzalezmartinez/stack_generador.git
     ```
 
 2. Inicia el proyecto con Docker:
