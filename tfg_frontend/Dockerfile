@@ -1,8 +1,8 @@
 
 FROM node:latest as angular
 
-ARG IP_FRONT
-ENV ENV_IP_FRONT=${IP_FRONT}
+ARG PUBLIC_URL
+ENV ENV_PUBLIC_URL=${PUBLIC_URL}
 
 WORKDIR /home/app
 COPY package*.json .
@@ -11,11 +11,9 @@ COPY . .
 RUN if [ -f Enviroment.ts ]; then rm Enviroment.ts; fi
 RUN echo "Archivo Environment.ts eliminado (si existía)"
 
-RUN echo "export const Enviroment = { \
-  BACKEND_URL : '${ENV_IP_FRONT}', \
-  BACKEND_API_URL : '${ENV_IP_FRONT}/api/', \
-  CHAT_WS : '${ENV_IP_FRONT}WebChat' \
-};" > Enviroment.ts
+RUN WS_URL=$(echo "${ENV_PUBLIC_URL}" | sed 's|^https://|wss://|; s|^http://|ws://|'); \
+    printf "export const Enviroment = {\n  BACKEND_URL : '%s',\n  BACKEND_API_URL : '%s/api/',\n  CHAT_WS : '%s/WebChat'\n};\n" \
+    "${ENV_PUBLIC_URL}" "${ENV_PUBLIC_URL}" "${WS_URL}" > Enviroment.ts
 
 RUN echo "Archivo environment.ts creado con variables de entorno"
 RUN chmod 777 Enviroment.ts
