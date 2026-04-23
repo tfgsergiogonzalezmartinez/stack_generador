@@ -17,6 +17,7 @@ namespace backend_tfg
         public string? DB_USER { get; set; }
         public string? DB_PASSWORD { get; set; }
         public string? DB_NAME { get; set; }
+        public string? MONGO_AUTH_DB { get; set; }
 
         public string? JWT_SECRET { get; set; }
         public string? JWT_AUDIENCE { get; set; }
@@ -36,6 +37,7 @@ namespace backend_tfg
             DB_USER = configuration["DB_USER"];
             DB_PASSWORD = configuration["DB_PASSWORD"];
             DB_NAME = configuration["DB_NAME"];
+            MONGO_AUTH_DB = configuration["MONGO_AUTH_DB"];
 
             
             JWT_SECRET = configuration["JWT_SECRET"];

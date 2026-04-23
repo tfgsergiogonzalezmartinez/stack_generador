@@ -42,8 +42,8 @@ builder.Services.AddCors(options =>
                 .SetIsOriginAllowed((host) => true));
 });
  
-System.Console.WriteLine("Conectando a la base de datos "+entorno.DB_NAME+" con cadena : mongodb://"+entorno.DB_USER+":"+entorno.DB_PASSWORD+"@"+entorno.DB_HOST+":"+entorno.DB_PORT);
-builder.Services.AddContextMongoDB(builder.Configuration,"mongodb://"+entorno.DB_USER+":"+entorno.DB_PASSWORD+"@"+entorno.DB_HOST+":"+entorno.DB_PORT,entorno.DB_NAME);
+System.Console.WriteLine("Conectando a la base de datos "+entorno.DB_NAME+" con cadena : mongodb://"+entorno.DB_USER+":"+entorno.DB_PASSWORD+"@"+entorno.DB_HOST+":"+entorno.DB_PORT+"/?authSource="+entorno.MONGO_AUTH_DB);
+builder.Services.AddContextMongoDB(builder.Configuration,"mongodb://"+entorno.DB_USER+":"+entorno.DB_PASSWORD+"@"+entorno.DB_HOST+":"+entorno.DB_PORT+"/?authSource="+entorno.MONGO_AUTH_DB,entorno.DB_NAME);
 builder.Services.AddRepositorios();
 builder.Services.AddControllers().AddJsonOptions(options=>
 {
