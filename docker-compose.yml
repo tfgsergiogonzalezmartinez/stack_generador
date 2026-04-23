@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   backend:
+    container_name: tfg-generador-backend
     build:
       context: ./tfg_backend
       dockerfile: Dockerfile
@@ -35,16 +36,19 @@ services:
       - JWT_EXPIRATION=${JWT_EXPIRATION}
       - APP_NAME=${APP_NAME}
       - APP_VERSION=${APP_VERSION}
-    ports:
-      - "5000:5000"
+    expose:
+      - "5000"
     volumes:
       - ./tfg_backend/plantillas:/app/plantillas
       - ./tfg_backend/data:/app/data
     depends_on:
       - mongo
+    networks:
+      - dokploy-network
     restart: always
 
   frontend:
+    container_name: tfg-generador-frontend
     build:
       context: ./tfg_frontend
       dockerfile: Dockerfile
@@ -56,13 +60,16 @@ services:
       - IP_FRONT=${IP_FRONT}
       - API_HOST=${API_HOST}
       - API_PORT=${API_PORT}
-    ports:
-      - "4200:80"
+    expose:
+      - "80"
     depends_on:
       - backend
+    networks:
+      - dokploy-network
     restart: always
 
   mongo:
+    container_name: tfg-generador-mongo
     image: mongo:latest
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
@@ -72,9 +79,43 @@ services:
       - DB_PORT=${DB_PORT}
     volumes:
       - mongo-data:/data/db
-    ports:
-      - "27017:27017"
+    expose:
+      - "27017"
+    networks:
+      - dokploy-network
     restart: always
+
+  # ── Ingress (Nginx reverse proxy + Traefik endpoint) ──────────
+  ingress:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    volumes:
+      - ./nginx/ingress.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    expose:
+      - "80"
+    networks:
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=dokploy-network
+      # HTTP → HTTPS redirect
+      - traefik.http.middlewares.tfg-generador-https-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.tfg-generador-https-redirect.redirectscheme.permanent=true
+      - traefik.http.routers.tfg-generador-http.rule=Host(`${DOMAIN:?DOMAIN is required}`)
+      - traefik.http.routers.tfg-generador-http.entrypoints=web
+      - traefik.http.routers.tfg-generador-http.middlewares=tfg-generador-https-redirect
+      # HTTPS
+      - traefik.http.routers.tfg-generador.rule=Host(`${DOMAIN:?DOMAIN is required}`)
+      - traefik.http.routers.tfg-generador.entrypoints=websecure
+      - traefik.http.routers.tfg-generador.tls.certresolver=letsencrypt
+      - traefik.http.services.tfg-generador.loadbalancer.server.port=80
 
 volumes:
   mongo-data:
+
+networks:
+  dokploy-network:
+    external: true
